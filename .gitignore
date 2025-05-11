@@ -1,5 +1,6 @@
 venv/
-data/raw_data/
+data/raw_data/*
+!data/raw_data/*.dvc
 data/processed_data/
 models/
 metrics/
