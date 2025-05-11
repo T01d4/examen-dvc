@@ -6,5 +6,3 @@ data/processed_data/*
 !data/processed_data/*.dvc
 models/
 metrics/
-*.dvc
-!.dvc
