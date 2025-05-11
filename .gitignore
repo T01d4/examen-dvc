@@ -1,6 +1,7 @@
 venv/
 data/raw_data/*
 !data/raw_data/*.dvc
+!data/raw_data/raw.csv.dvc
 data/processed_data/*
 !data/processed_data/*.dvc
 models/
