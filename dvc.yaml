@@ -1,54 +1,54 @@
 stages:
   split_data:
     cmd: python src/data/split_data.py --input_path data/raw_data/raw.csv --output_dir
-      data/processed
+      data/processed_data
     deps:
     - data/raw_data/raw.csv
     - src/data/split_data.py
     outs:
-    - data/processed/X_test.csv
-    - data/processed/X_train.csv
-    - data/processed/y_test.csv
-    - data/processed/y_train.csv
+    - data/processed_data/X_test.csv
+    - data/processed_data/X_train.csv
+    - data/processed_data/y_test.csv
+    - data/processed_data/y_train.csv
   normalize_data:
-    cmd: python src/data/normalize_data.py --input_dir data/processed --output_dir
-      data/processed --scaler_path data/scaling_model.dill
+    cmd: python src/data/normalize_data.py --input_dir data/processed_data --output_dir
+      data/processed_data --scaler_path data/scaling_model.dill
     deps:
-    - data/processed/X_test.csv
-    - data/processed/X_train.csv
+    - data/processed_data/X_test.csv
+    - data/processed_data/X_train.csv
     - src/data/normalize_data.py
     outs:
-    - data/processed/X_test_scaled.csv
-    - data/processed/X_train_scaled.csv
+    - data/processed_data/X_test_scaled.csv
+    - data/processed_data/X_train_scaled.csv
   grid_search:
-    cmd: python src/models/grid_search.py --input_dir data/processed --output_path
+    cmd: python src/models/grid_search.py --input_dir data/processed_data --output_path
       models/best_params.pkl
     deps:
-    - data/processed/X_train_scaled.csv
-    - data/processed/y_train.csv
+    - data/processed_data/X_train_scaled.csv
+    - data/processed_data/y_train.csv
     - src/models/grid_search.py
     outs:
     - models/best_params.pkl
   train_model:
-    cmd: python src/models/train_model.py --input_dir data/processed --params_path
+    cmd: python src/models/train_model.py --input_dir data/processed_data --params_path
       models/best_params.pkl --output_path models/trained_model.pkl
     deps:
-    - data/processed/X_train_scaled.csv
-    - data/processed/y_train.csv
+    - data/processed_data/X_train_scaled.csv
+    - data/processed_data/y_train.csv
     - models/best_params.pkl
     - src/models/train_model.py
     outs:
     - models/trained_model.pkl
   evaluate_model:
-    cmd: python src/models/evaluate_model.py --input_dir data/processed --model_path
-      models/trained_model.pkl --output_dir data/processed --metrics_path metrics/scores.json
+    cmd: python src/models/evaluate_model.py --input_dir data/processed_data --model_path
+      models/trained_model.pkl --output_dir data/processed_data --metrics_path metrics/scores.json
     deps:
-    - data/processed/X_test_scaled.csv
-    - data/processed/y_test.csv
+    - data/processed_data/X_test_scaled.csv
+    - data/processed_data/y_test.csv
     - models/trained_model.pkl
     - src/models/evaluate_model.py
     outs:
-    - data/processed/predictions.csv
+    - data/processed_data/predictions.csv
     metrics:
     - metrics/scores.json:
         cache: false
