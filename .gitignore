@@ -4,5 +4,11 @@ data/raw_data/*
 !data/raw_data/raw.csv.dvc
 data/processed_data/*
 !data/processed_data/*.dvc
+!data/processed_data/X_train.csv.dvc
+!data/processed_data/X_test.csv.dvc
+!data/processed_data/y_train.csv.dvc
+!data/processed_data/y_test.csv.dvc
+!data/processed_data/X_train_scaled.csv.dvc
+!data/processed_data/X_test_scaled.csv.dvc
 models/
 metrics/
